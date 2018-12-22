@@ -1,0 +1,32 @@
+language: node_js
+node_js: stable
+
+# cache:
+#   directories:
+#     - node_modules
+
+before_install:
+  - export TZ='Asia/Beijing' # 更改时区
+
+install:
+  - npm install
+
+script:
+  # 为了能在git-pages预览 单独发布带有二级域名的包
+  - npm run build:git
+
+after_script:
+  - cd ./github
+  - git init 
+  - git config user.name "BiYuqi"
+  - git config user.email "biyuqiwan@163.com"
+  - git add .
+  - git commit -m "Travis CI Auto Builder at `date +"%Y-%m-%d %H:%M"`"
+  - git push --force --quiet "https://${VueIntersectionObserver}@${GH_REF}" master:gh-pages
+
+branches:
+  only:
+    - master
+env:
+ global:
+   - GH_REF: github.com/BiYuqi/vue-intersection-observer.git

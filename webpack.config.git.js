@@ -1,14 +1,19 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const isProd = process.env.NODE_ENV === 'production'
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+
 module.exports = {
+  mode: 'production',
   entry: {
     'vue-intersection-observer': './src/main.js'
   },
   output: {
-    path: path.resolve(__dirname, './github'),
-    // 发布到github预览
+    path: path.resolve(__dirname, 'github'),
     publicPath: '/vue-intersection-observer/',
     filename: 'js/[name].js'
   },
@@ -17,28 +22,26 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'vue-style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader'
-        ]
-      },
-      {
+        ],
+      },      {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-          }
-        }
+        loader: 'vue-loader'
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: file => (
+          /node_modules/.test(file) &&
+          !/\.vue\.js/.test(file)
+        )
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: 'images/[name].[ext]?[hash]'
+          name: '[name].[ext]?[hash]'
         }
       }
     ]
@@ -50,47 +53,60 @@ module.exports = {
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    overlay: true
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: 'commons',
+          chunks: 'all', 
+          minChunks: 2,
+          minSize: 1,
+          priority: 0 
+        },
+        vendor: { 
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all', 
+          priority: 10
+        }
+      }
+    },
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          cache: true,
+          parallel: true,
+          warnings: false,
+          comments: false,
+          compress: {
+            // 移除 warning
+            warnings: false,
+            // 移除 console
+            drop_console: true
+          }
+        }
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
   },
-  performance: {
-    hints: false
-  },
-  devtool: '#eval-source-map'
-}
+  plugins: [
+    new VueLoaderPlugin(),
+    new CleanWebpackPlugin(['github'], {
+      root: path.resolve(__dirname, './'),
+      verbose:  true
+    }),
 
-if (isProd) {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
+    // 压缩抽离样式
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[contenthash:8].css',
+      chunkFilename: 'css/[name].[contenthash:8].css'
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    }),
+
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: 'index.html',
       filename: 'index.html',
-      // favicon: resolve('favicon.ico'),
       inject: true,
-      xhtml: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-      },
-      chunksSortMode: 'dependency'
+      xhtml: true
     })
-  ])
+  ]
 }
