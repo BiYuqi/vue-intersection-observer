@@ -18,42 +18,89 @@
 npm i vue-intersection-observer -S
 ```
 
-Usage:
+在懒加载图片中使用(Usage in Lazy-load-image):
+
+[Demo](http://loadingmore.com/vue-intersection-observer/#/lazy-load)
+
 ```js
+<!-- 基于本插件封装LazyImage组件 -->
 <template>
-  <div id="app">
-    <div class="content"></div>
-    <Observer @on-change="onChange">
-      <div class="test">测试是否出现</div>
-    </Observer>
-  </div>
+  <observer @on-change="onChange" class="test-lazy">
+    <img height="200" style="max-width: 100%" :src="currentInfo" alt="">
+  </observer>
 </template>
 
 <script>
 import Observer from 'vue-intersection-observer'
-
 export default {
-  methods: {
-    onChange(entry, unobserve) {
-      if (entry.isIntersecting) {
-        unobserve()
-      }
+  data() {
+    return{
+      currentInfo: false
+    }
+  },
+  props: {
+    imageSrc: {
+      type: [String, Number]
     }
   },
   components: {
     Observer
+  },
+  methods: {
+    onChange(entry, unobserve) {
+      // 加载后 取消监听,优化性能
+      if (entry.isIntersecting) {
+        unobserve()
+      }
+      this.currentInfo = entry.isIntersecting ? this.imageSrc : 'https://avatars2.githubusercontent.com/u/20992106?s=460&v=4'
+    }
+  }
+}
+```
+```js
+<template>
+  <div class="w800">
+    <div class="header">图片懒加载测试<i class="tips">请快速向下滚动屏幕测试懒加载</i></div>
+    <div class="content"></div>
+    <div v-for="item in imgList" :key="item" class="img-box-mock">
+      <LazyImage :imageSrc="item"></LazyImage>
+    </div>
+  </div>
+</template>
+
+<script>
+import LazyImage from './LazyImage'
+export default {
+  data() {
+    return {
+      imgList: [
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-new-commit0.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-new-commit1.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-new-commit2.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-new-commit3.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-new-commit4.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-new-commit5.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old0.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old1.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old2.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old3.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old4.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old5.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old6.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old7.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old8.png',
+        'http://loadingmore-1254319003.coscd.myqcloud.com/edit-old9.png'
+      ]
+    }
+  },
+  components: {
+    LazyImage
   }
 }
 </script>
-
-<style>
-.content{
-  height: 1000px;
-}
-</style>
 ```
 
-Usage:
+在普通场景中使用(Usage in normal):
 ```js
 <template>
   <div>
@@ -72,7 +119,7 @@ Usage:
 </template>
 
 <script>
-import Observer from '@/components/index.js'
+import Observer from 'vue-intersection-observer'
 export default {
   data() {
     return{
@@ -107,6 +154,8 @@ npm install --save intersection-observer
 
 ## 文档 ( Documentation )
 
+[DEMO](http://loadingmore.com/vue-intersection-observer)
+
 ## Options
 
 root: 如果root参数指定为null或者不指定的时候默认使用浏览器视口做为root
@@ -116,3 +165,5 @@ rootMargin: root元素的外边距。string | default 0px 0px 0px 0px.
 threshold: 可以是单一的number也可以是number数组，target元素和root元素相交程度达到该值的时候IntersectionOserver注册的回调函数将会被执行。number|Array<number> | default: 0
 
 on-change (required): 回调函数,返回两个参数，一个是当前监听元素数据<IntersectionObserverEntry>, 一个是取消监听当前元素的方法<unobserve>
+
+> 文档不够完善,会持续补充.
