@@ -60,7 +60,7 @@ export default {
   color: #fff;
 }
 .content{
-  height: 1000px;
+  height: 2000px;
   line-height: 1000px;
   text-align: center;
   font-size: 30px;
