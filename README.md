@@ -53,6 +53,44 @@ export default {
 </style>
 ```
 
+Usage:
+```js
+<template>
+  <div>
+    <div class="left w800">
+      <div class="header w800" :class="{active: visible}">
+        检测元素从屏幕区域显示隐藏{{visible ? 'visible' : 'unvisible'}}
+      </div>
+      <div class="content">
+        Please Scroll Page Down and Up To Test
+      </div>
+      <observer @on-change="onChange">
+        <div class="test" :class="{active: visible}">终于出现了</div>
+      </observer>
+    </div>
+  </div>
+</template>
+
+<script>
+import Observer from '@/components/index.js'
+export default {
+  data() {
+    return{
+      visible: false
+    }
+  },
+  components: {
+    Observer
+  },
+  methods: {
+    onChange(entry, obv) {
+      this.visible = entry.isIntersecting
+    }
+  }
+}
+</script>
+```
+
 Optionally add the polyfill and make sure it's required on your dependendencies for unsupporting browsers:
 
 ```js
