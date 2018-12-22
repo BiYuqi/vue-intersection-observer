@@ -7,7 +7,7 @@
   "main": "dist/vue-intersection-observer.js",
   "private": false,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "dev": "webpack-dev-server --open --inline --mode development --config webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "build:git": "cross-env NODE_ENV=production env_config=git webpack --progress --config ./webpack.config.git.js"
   },
@@ -17,7 +17,7 @@
     "src"
   ],
   "dependencies": {
-    "vue": "^2.5.11",
+    "vue": "^2.5.21",
     "vue-router": "^3.0.2"
   },
   "browserslist": [
@@ -37,9 +37,13 @@
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.4",
     "html-webpack-plugin": "^3.2.0",
-    "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "mini-css-extract-plugin": "^0.5.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "vue-loader": "^15.4.2",
+    "vue-template-compiler": "^2.5.21",
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.11"
   }
 }
