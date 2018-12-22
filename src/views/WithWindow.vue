@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="left">
-      <div class="header" :class="{active: visible}">
-        {{visible ? 'visible' : 'unvisible'}}
+    <div class="left w800">
+      <div class="header w800" :class="{active: visible}">
+        检测元素从屏幕区域显示隐藏{{visible ? 'visible' : 'unvisible'}}
       </div>
       <div class="content">
         Please Scroll Page Down and Up To Test
@@ -34,9 +34,6 @@ export default {
 </script>
 
 <style scoped>
-.left{
-  width: 800px;
-}
 .header{
   position: fixed;
   top: 0;
@@ -47,7 +44,6 @@ export default {
   line-height: 40px;
   text-align: center;
   font-size: 20px;
-  width: 800px;
 }
 .header.active{
   background-color: green;

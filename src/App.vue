@@ -26,4 +26,7 @@ html, body{
   color: #2c3e50;
   height: 100%;
 }
+.w800{
+  width: 800px;
+}
 </style>
