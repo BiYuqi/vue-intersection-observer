@@ -1,6 +1,6 @@
 {
   "name": "vue-intersection-observer",
-  "description": "A Vue.js project",
+  "description": "Vue component for the Intersection <Observer /> API",
   "version": "1.0.0",
   "author": "biyuqi <biyuqiwan@163.com>",
   "license": "MIT",
