@@ -115,6 +115,4 @@ rootMargin: root元素的外边距。string | default 0px 0px 0px 0px.
 
 threshold: 可以是单一的number也可以是number数组，target元素和root元素相交程度达到该值的时候IntersectionOserver注册的回调函数将会被执行。number|Array<number> | default: 0
 
-disabled: boolean | default: false
-
-on-change (required): 回调函数,返回两个参数，一个是当前监听元素数据<IntersectionObserverEntry>, 一个是取消监听当前元素的方法<unobserve>
+on-change (required): 回调函数,返回两个参数，一个是当前监听元素数据<IntersectionObserverEntry>, 一个是取消监听当前元素的方法<unobserve>
