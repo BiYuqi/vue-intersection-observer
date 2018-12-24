@@ -57,6 +57,7 @@ export default {
   }
 }
 ```
+实战懒加载：
 ```js
 <template>
   <div class="w800">
@@ -156,14 +157,39 @@ npm install --save intersection-observer
 
 [DEMO](http://loadingmore.com/vue-intersection-observer)
 
-## Options
+## Options And Method
+Name | Type | Default | Required | Description
+------- | -------- | ---------- | ------- | ------- | ----
+root | HTMLElement |   | false | 如果root参数指定为null或者不指定的时候默认使用浏览器视口做为root
+rootMargin | String | '0px' | false | 定义根元素的margin，用来扩展或缩小rootBounds这个矩形的大小，从而影响intersectionRect交叉区域的大小。它使用CSS的定义方法，比如10px 20px 30px 40px，表示 top、right、bottom 和 left 四个方向的值
+threshold | Number or Array\<number> | 0 | false | threshold属性决定了什么时候触发回调函数。它是一个数组，每个成员都是一个门槛值，默认为[0]，即交叉比例（intersectionRatio）达到0时触发回调函数
+on-change |  Function | | required | (entry, unobserve) => {}
 
-root: 如果root参数指定为null或者不指定的时候默认使用浏览器视口做为root
+## Method Detail Callback parms
+```js
+<observer @on-change="onChange" class="test-lazy">
+  <img height="200" style="max-width: 100%" :src="currentInfo" alt="">
+</observer>
 
-rootMargin: root元素的外边距。string | default 0px 0px 0px 0px.
+onChange(entry, unobserve) {
+  // entry: 
+  // time：可见性发生变化的时间，是一个高精度时间戳，单位为毫秒
 
-threshold: 可以是单一的number也可以是number数组，target元素和root元素相交程度达到该值的时候IntersectionOserver注册的回调函数将会被执行。number|Array<number> | default: 0
+  // target：被观察的目标元素，是一个 DOM 节点对象
 
-on-change (required): 回调函数,返回两个参数，一个是当前监听元素数据<IntersectionObserverEntry>, 一个是取消监听当前元素的方法<unobserve>
+  // rootBounds：根元素的矩形区域的信息，
+
+  // getBoundingClientRect()方法的返回值，如果没有根元素（即直接相对于视口滚动），则返回null
+
+  // boundingClientRect：目标元素的矩形区域的信息
+
+  // intersectionRect：目标元素与视口（或根元素）的交叉区域的信息
+  // isIntersecting: boolean 返回当前元素在可视区域是否显示 (很重要，大部分场景基于此字段判断)
+
+  // intersectionRatio：目标元素的可见比例，即intersectionRect占boundingClientRect的比例，完全可见时为1，完全不可见时小于等于0
+  // unobserve
+  // The method can remove target describe
+}
+```
 
 > 文档不够完善,会持续补充.
