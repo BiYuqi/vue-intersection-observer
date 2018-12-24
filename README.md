@@ -159,7 +159,7 @@ npm install --save intersection-observer
 
 ## Options And Method
 Name | Type | Default | Required | Description
-------- | -------- | ---------- | ------- | ------- | ----
+--------- | --------- | --------- | --------- | ---------
 root | HTMLElement |   | false | 如果root参数指定为null或者不指定的时候默认使用浏览器视口做为root
 rootMargin | String | '0px' | false | 定义根元素的margin，用来扩展或缩小rootBounds这个矩形的大小，从而影响intersectionRect交叉区域的大小。它使用CSS的定义方法，比如10px 20px 30px 40px，表示 top、right、bottom 和 left 四个方向的值
 threshold | Number or Array\<number> | 0 | false | threshold属性决定了什么时候触发回调函数。它是一个数组，每个成员都是一个门槛值，默认为[0]，即交叉比例（intersectionRatio）达到0时触发回调函数
