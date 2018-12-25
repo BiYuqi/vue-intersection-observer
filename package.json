@@ -16,6 +16,14 @@
     "dist",
     "src"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BiYuqi/vue-intersection-observer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BiYuqi/vue-intersection-observer/issues"
+  },
+  "homepage": "https://github.com/BiYuqi/vue-intersection-observer#readme",
   "keywords": [
     "vue",
     "component",
