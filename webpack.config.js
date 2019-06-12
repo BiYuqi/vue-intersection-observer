@@ -100,9 +100,7 @@ if (isProd) {
           warnings: false,
           comments: false,
           compress: {
-            // 移除 warning
-            warnings: false,
-            // 移除 console
+            // remove console
             drop_console: true
           }
         }
