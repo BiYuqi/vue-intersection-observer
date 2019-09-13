@@ -2,7 +2,6 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -30,7 +29,8 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
@@ -74,24 +74,21 @@ module.exports = {
 
 if (isProd) {
   module.exports.devtool = '#source-map'
-  module.exports.optimization = {
-    splitChunks: {
-      cacheGroups: {
-        commons: {
-          name: 'commons',
-          chunks: 'all', 
-          minChunks: 2,
-          minSize: 1,
-          priority: 0 
-        },
-        vendor: { 
-          name: 'vendor',
-          test: /[\\/]node_modules[\\/]/,
-          chunks: 'all', 
-          priority: 10
-        }
-      }
+  module.exports.externals = {
+    vue: {
+      root: 'Vue',
+      commonjs: 'vue',
+      commonjs2: 'vue',
+      amd: 'vue'
     },
+    'vue-router': {
+      root: 'VueRouter',
+      commonjs: 'vue-router',
+      commonjs2: 'vue-router',
+      amd: 'VueRouter'
+    } 
+  }
+  module.exports.optimization = {
     minimizer: [
       new UglifyJsPlugin({
         uglifyOptions: {
@@ -117,6 +114,7 @@ if (isProd) {
 } else {
   // dev
   module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: 'index.html',
       filename: 'index.html',
