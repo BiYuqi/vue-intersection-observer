@@ -1,7 +1,4 @@
-# [vue-intersection-observer](https://github.com/BiYuqi/webpack-seed)
-
-<p align="left">
-</p>
+# [vue-intersection-observer](https://github.com/BiYuqi/vue-intersection-observer)
 
 ## 前言
 **Vue Intersection Observer** 是一个Vue组件，基于[IntersectionObserver API](https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API)的集成, 包装，便于实现需要用到元素交集变化的信息.
@@ -20,7 +17,7 @@ npm i vue-intersection-observer -S
 
 在懒加载图片中使用(Usage in Lazy-load-image):
 
-[Demo](http://loadingmore.com/vue-intersection-observer/#/lazy-load)
+[Demo](https://biyuqi.github.io/vue-intersection-observer/#/lazy-load)
 
 ```js
 <!-- 基于本插件封装LazyImage组件 -->
@@ -138,7 +135,7 @@ npm install --save intersection-observer
 
 ## 文档 ( Documentation )
 
-[DEMO](http://loadingmore.com/vue-intersection-observer)
+[DEMO](https://biyuqi.github.io/vue-intersection-observer)
 
 ## Options And Method
 Name | Type | Default | Required | Description
@@ -174,5 +171,3 @@ onChange(entry, unobserve) {
   // The method can remove target describe
 }
 ```
-
-> 文档不够完善,会持续补充.
