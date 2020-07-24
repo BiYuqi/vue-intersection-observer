@@ -12,12 +12,11 @@ install:
   - npm install
 
 script:
-  # 为了能在git-pages预览 单独发布带有二级域名的包
   - npm run build
 
 after_script:
   - cd ./dist
-  - git init 
+  - git init
   - git config user.name "BiYuqi"
   - git config user.email "biyuqiwan@163.com"
   - git add .

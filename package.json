@@ -16,6 +16,14 @@
   "files": [
     "lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BiYuqi/vue-intersection-observer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BiYuqi/vue-intersection-observer/issues"
+  },
+  "homepage": "https://github.com/BiYuqi/vue-intersection-observer#readme",
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
