@@ -131,7 +131,7 @@ npm install --save intersection-observer
 
 ## What does IntersectionObserver do?
 
-! [](http://loadingmore-1254319003.coscd.myqcloud.com/observe.png)
+![](http://loadingmore-1254319003.coscd.myqcloud.com/observe.png)
 
 ## Why use this component?
 
