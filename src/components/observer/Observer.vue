@@ -43,7 +43,7 @@ export default {
     }, options);
     this.observer.observe(this.$el);
   },
-  beforeDestory() {
+  beforeDestroy() {
     if (this.observer) {
       this.unobserve();
       this.observer = null;
