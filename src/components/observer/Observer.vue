@@ -14,7 +14,10 @@ export default {
   },
   props: {
     root: {
-      type: [HTMLElement, window],
+      type: [
+        typeof HTMLElement !== 'undefined' ? [HTMLElement] : Object,
+        typeof window !== 'undefined' ? window : null
+      ],
       default: null
     },
     rootMargin: {
